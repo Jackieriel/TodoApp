@@ -9,14 +9,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                {{-- @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif --}}
-
                 <div class="card card-new-task">
-                    <div class="card-header"><h3><a href="{{url('/')}}">Todos</a></h3></div>
+                    <div class="card-header">
+                        <h3><a href="{{ url('/') }}">Todos</a></h3>
+                    </div>
+
+                    {{-- Flash messages --}}
+                    <x-flashMessage />
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('todos.store') }}">

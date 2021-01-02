@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
@@ -39,8 +41,8 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-         // validate the given request
-         $todo = $this->validate($request, [
+        // validate the given request
+        $todo = $this->validate($request, [
             'task' => 'required|string',
         ]);
 
@@ -51,7 +53,7 @@ class TodoController extends Controller
 
         $todo->save();
         // flash a success message to the session
-        // session()->flash('status', 'Task Created!');
+        session()->flash('success', 'Task Created Successfully!');
 
         // redirect to tasks index
         return redirect()->back();
@@ -79,7 +81,7 @@ class TodoController extends Controller
         $todo = Todo::findOrFail($id);
 
 
-        return view('pages.edit')->with('todo',$todo);
+        return view('pages.edit')->with('todo', $todo);
     }
 
     /**
@@ -92,13 +94,16 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo, $id)
     {
         $request->validate([
-            'task'=>'string|required'
+            'task' => 'string|required'
         ]);
 
         $todo = Todo::findOrFail($id);
         $todo->task = $request->task;
 
         $todo->save();
+
+        // flash a success message to the session
+        session()->flash('success', 'Task Updated Successfully!');
 
         return redirect()->route('todos');
     }
@@ -114,9 +119,12 @@ class TodoController extends Controller
         $todo = Todo::findOrFail($id);
 
         $todo->delete();
+
+        // flash a success message to the session
+        session()->flash('success', 'Task Deleted Suucessfully!');
         return redirect()->back();
-    } 
-    
+    }
+
     // mark as completed
     public function completed($id)
     {
@@ -126,17 +134,23 @@ class TodoController extends Controller
 
         $todo->save();
 
+        // flash a success message to the session
+        session()->flash('success', 'Successfully mark as completed!');
+
         return redirect()->back();
-    } 
-    
+    }
+
     // mark as uncompleted
     public function uncompleted($id)
-    {
+    {  
         $todo = Todo::findOrFail($id);
 
         $todo->completed = 0;
 
         $todo->save();
+
+        // flash a success message to the session
+        session()->flash('success', 'Successfully mark as uncompleted!');
 
         return redirect()->back();
     }
