@@ -47,6 +47,7 @@ Then go to `http://localhost:8000` from your browser and see the app.
 ## Having problem running the app?
 
 If you have any problem running the App please contact me +2348131327382
+
 Follow me up on twitter https://twitter.com/jackieriel1
 
 ## Screenshot
